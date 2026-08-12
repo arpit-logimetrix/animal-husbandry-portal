@@ -1,0 +1,6 @@
+{
+  "name": "Unified Animal Husbandry Department Portal",
+  "description": "Unified AI-enabled portal for Animal Husbandry Department: Livestock Management, Schemes, MVU Tracking, Assets, Training, Budget & Finance.",
+  "requestFramePermissions": ["camera", "microphone", "geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
