@@ -20,6 +20,7 @@ import {
   X,
   FileText
 } from 'lucide-react';
+import upLogo from '../assets/up-logo.png';
 
 interface SidebarProps {
   activeTab: ModuleTab;
@@ -107,14 +108,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
       {/* Top Branding Section */}
       <div className="px-3.5 pt-4 pb-3 border-b border-emerald-800/50 flex items-center justify-between shrink-0">
         <div className={`flex items-center space-x-2.5 overflow-hidden ${collapsed ? 'justify-center w-full' : ''}`}>
-          <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 border border-amber-400/30"
-            style={{background: 'linear-gradient(135deg, rgba(245,158,11,0.25) 0%, rgba(245,158,11,0.1) 100%)'}}>
-            <ShieldCheck className="w-4 h-4 text-amber-400" />
+          {/* UP Govt Seal Logo */}
+          <div className="w-9 h-9 rounded-full flex items-center justify-center shrink-0 bg-white border-2 border-amber-400/40 p-0.5 shadow-sm">
+            <img src={upLogo} alt="UP Govt Seal" className="w-full h-full object-contain rounded-full" />
           </div>
 
           {(!collapsed || mobileOpen) && (
             <div className="transition-all duration-200">
-              <div className="text-[10px] font-mono font-bold tracking-widest text-amber-400/90 uppercase">AHD PORTAL</div>
+              <div className="text-[10px] font-mono font-bold tracking-widest text-amber-400/90 uppercase">UP SARKAR</div>
               <h2 className="text-xs font-bold text-white/95 tracking-tight leading-snug">
                 {isHi ? 'पशुपालन कमान सेंटर' : 'GovTech Command'}
               </h2>

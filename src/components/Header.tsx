@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Language, UserRole, ModuleTab } from '../types';
 import { PhoneCall, Globe, Building2, Search, Bell, Sparkles, User, Menu, MapPin, AlertCircle, Info, CheckCircle } from 'lucide-react';
 import { GlobalSearchModal } from './GlobalSearchModal';
+import upLogo from '../assets/up-logo.png';
 
 interface HeaderProps {
   language: Language;
@@ -57,8 +58,8 @@ export const Header: React.FC<HeaderProps> = ({
         {/* Left: Department Emblem & Title */}
         <div className="flex items-center space-x-2.5 shrink-0 min-w-0">
           <div className="flex items-center gap-1.5 shrink-0">
-            <div className="w-4 h-4 rounded bg-amber-500/20 border border-amber-400/30 flex items-center justify-center">
-              <Building2 className="w-2.5 h-2.5 text-amber-300" />
+            <div className="w-5 h-5 rounded-full bg-white flex items-center justify-center p-0.5 shadow-sm">
+              <img src={upLogo} alt="UP Govt" className="w-full h-full object-contain" />
             </div>
           </div>
           <span className="font-semibold text-emerald-50 tracking-tight truncate text-[11px]">
@@ -107,10 +108,10 @@ export const Header: React.FC<HeaderProps> = ({
               </button>
             )}
 
-            {/* Logo Badge */}
-            <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 text-base"
-              style={{background: 'linear-gradient(135deg, #14532D 0%, #166534 60%, #0f3e21 100%)', boxShadow: '0 2px 8px rgba(20,83,45,0.35), inset 0 1px 0 rgba(255,255,255,0.1)'}}>
-              🏛️
+            {/* Logo Badge — UP Govt Seal */}
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-white border border-emerald-200 shadow-sm p-0.5"
+              style={{boxShadow: '0 2px 8px rgba(20,83,45,0.15), inset 0 1px 0 rgba(255,255,255,0.9)'}}>
+              <img src={upLogo} alt="UP Govt Seal" className="w-full h-full object-contain" />
             </div>
 
             <div className="min-w-0">
