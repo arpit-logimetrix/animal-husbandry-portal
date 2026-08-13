@@ -4,6 +4,7 @@ import { GraduationCap, Award, PlayCircle, FileText, CheckCircle2, Download, QrC
 
 interface ModuleTrainingProps {
   courses: TrainingCourse[];
+  setCourses: React.Dispatch<React.SetStateAction<TrainingCourse[]>>;
   certificates: TrainingCertificate[];
   setCertificates: React.Dispatch<React.SetStateAction<TrainingCertificate[]>>;
   language: Language;
@@ -13,6 +14,7 @@ interface ModuleTrainingProps {
 
 export const ModuleTraining: React.FC<ModuleTrainingProps> = ({
   courses = [],
+  setCourses,
   certificates = [],
   setCertificates,
   language,
@@ -33,6 +35,40 @@ export const ModuleTraining: React.FC<ModuleTrainingProps> = ({
   const [familyId, setFamilyId] = useState('FID-883921');
   const [enrolledCourseTitle, setEnrolledCourseTitle] = useState('');
   const [showCertGenerateModal, setShowCertGenerateModal] = useState(false);
+
+  // Add Course Modal
+  const [showAddCourseModal, setShowAddCourseModal] = useState(false);
+  const [newCourseTitle, setNewCourseTitle] = useState('');
+  const [newCourseTitleHindi, setNewCourseTitleHindi] = useState('');
+  const [newCourseCategory, setNewCourseCategory] = useState('Farmer Training');
+  const [newCourseDesc, setNewCourseDesc] = useState('');
+  const [newCourseDuration, setNewCourseDuration] = useState('30');
+
+  const handleAddCourse = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newCourseTitle || !newCourseTitleHindi) return;
+
+    const newCourse: TrainingCourse = {
+      id: `TRN-AHD-${Math.floor(1000 + Math.random() * 9000)}`,
+      title: newCourseTitle,
+      titleHindi: newCourseTitleHindi,
+      category: newCourseCategory,
+      description: newCourseDesc,
+      durationDays: parseInt(newCourseDuration) || 30,
+      enrolledCount: 0,
+      instructor: 'Assigned Instructor',
+      isMandatory: false,
+      videoModules: []
+    };
+
+    setCourses([newCourse, ...courses]);
+    setShowAddCourseModal(false);
+    setNewCourseTitle('');
+    setNewCourseTitleHindi('');
+    setNewCourseDesc('');
+    setNewCourseCategory('Farmer Training');
+    setNewCourseDuration('30');
+  };
 
   const filteredCourses = courses.filter((c) => {
     return (
@@ -105,6 +141,13 @@ export const ModuleTraining: React.FC<ModuleTrainingProps> = ({
               className={`px-3 py-1.5 rounded-md transition-all ${activeTab === 'certificates' ? 'bg-[#14532D] text-white font-semibold' : 'text-slate-600 hover:text-slate-900'}`}
             >
               {isHi ? 'ई-प्रमाणपत्र' : 'Verify Certificates'}
+            </button>
+            <button
+              onClick={() => setShowAddCourseModal(true)}
+              className="px-3 py-1.5 rounded-md transition-all text-white bg-blue-600 hover:bg-blue-700 font-semibold flex items-center gap-1"
+            >
+              <Plus className="w-4 h-4" />
+              {isHi ? 'नया कोर्स जोड़ें' : 'Add Training'}
             </button>
           </div>
         </div>
@@ -251,6 +294,88 @@ export const ModuleTraining: React.FC<ModuleTrainingProps> = ({
                 </button>
                 <button type="submit" className="px-5 py-2 bg-[#14532D] text-white font-semibold rounded-lg shadow-sm">
                   Complete Assessment & Generate Cert
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Add Course Modal */}
+      {showAddCourseModal && (
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-xl max-w-md w-full p-6 shadow-xl border border-slate-200 space-y-4 text-xs text-slate-900">
+            <h3 className="font-bold text-[#14532D] text-base border-b border-slate-200 pb-3">
+              {isHi ? 'नया प्रशिक्षण कोर्स जोड़ें' : 'Add New Training Course'}
+            </h3>
+
+            <form onSubmit={handleAddCourse} className="space-y-3">
+              <div>
+                <label className="block text-slate-700 font-semibold mb-1">Title (English)</label>
+                <input
+                  type="text"
+                  required
+                  value={newCourseTitle}
+                  onChange={(e) => setNewCourseTitle(e.target.value)}
+                  className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg p-2.5"
+                  placeholder="e.g. Advanced Dairy Farming"
+                />
+              </div>
+
+              <div>
+                <label className="block text-slate-700 font-semibold mb-1">Title (Hindi)</label>
+                <input
+                  type="text"
+                  required
+                  value={newCourseTitleHindi}
+                  onChange={(e) => setNewCourseTitleHindi(e.target.value)}
+                  className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg p-2.5"
+                  placeholder="e.g. उन्नत डेयरी फार्मिंग"
+                />
+              </div>
+
+              <div>
+                <label className="block text-slate-700 font-semibold mb-1">Category</label>
+                <select
+                  value={newCourseCategory}
+                  onChange={(e) => setNewCourseCategory(e.target.value)}
+                  className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg p-2.5"
+                >
+                  <option value="Farmer Training">Farmer Training</option>
+                  <option value="Veterinary Education">Veterinary Education</option>
+                  <option value="Skill Development">Skill Development</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-slate-700 font-semibold mb-1">Duration (Days)</label>
+                <input
+                  type="number"
+                  min="1"
+                  required
+                  value={newCourseDuration}
+                  onChange={(e) => setNewCourseDuration(e.target.value)}
+                  className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg p-2.5"
+                />
+              </div>
+
+              <div>
+                <label className="block text-slate-700 font-semibold mb-1">Description</label>
+                <textarea
+                  required
+                  value={newCourseDesc}
+                  onChange={(e) => setNewCourseDesc(e.target.value)}
+                  className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg p-2.5 h-20"
+                  placeholder="Course details..."
+                />
+              </div>
+
+              <div className="flex justify-end gap-2 pt-3 border-t border-slate-200">
+                <button type="button" onClick={() => setShowAddCourseModal(false)} className="px-4 py-2 border border-slate-200 rounded-lg text-slate-600 font-medium">
+                  Cancel
+                </button>
+                <button type="submit" className="px-5 py-2 bg-[#14532D] text-white font-semibold rounded-lg shadow-sm">
+                  Add Course
                 </button>
               </div>
             </form>

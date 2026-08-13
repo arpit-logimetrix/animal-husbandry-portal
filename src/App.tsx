@@ -287,6 +287,7 @@ export default function App() {
             {activeTab === 'training' && (
               <ModuleTraining
                 courses={courses}
+                setCourses={setCourses}
                 certificates={certificates}
                 setCertificates={setCertificates}
                 role={role}
